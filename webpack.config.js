@@ -136,7 +136,12 @@ const plugins = [
       },
       {
         from: path.join(srcPath, 'background/background-wrapper.js'),
-        to: path.join(distPath, isBeta ? `${pkg.version}-beta` : pkg.version, 'background-wrapper.js'),
+        to: path.join(distPath, 
+          isFirefox 
+            ? (isBeta ? `${pkg.version}-firefox-beta` : `${pkg.version}-firefox`)
+            : (isBeta ? `${pkg.version}-beta` : pkg.version), 
+          'background-wrapper.js'
+        ),
         transform(content) {
           if (isFirefox) {
             // Firefox MV3 使用 ES modules，不支持 importScripts
@@ -274,7 +279,11 @@ const options = {
   stats: 'errors-only',
   entry,
   output: {
-    path: path.join(__dirname, 'dist', isBeta ? `${pkg.version}-beta` : pkg.version),
+    path: path.join(__dirname, 'dist', 
+      isFirefox 
+        ? (isBeta ? `${pkg.version}-firefox-beta` : `${pkg.version}-firefox`)
+        : (isBeta ? `${pkg.version}-beta` : pkg.version)
+    ),
     filename: '[name].js',
   },
   module: {
