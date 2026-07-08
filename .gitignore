@@ -139,3 +139,7 @@ docs_dist
 *.crx
 *.pem
 updates.xml
+
+# OpenCode 会话状态
+.omo/
+.codegraph/
