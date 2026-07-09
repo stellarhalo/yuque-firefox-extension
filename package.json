@@ -3,10 +3,6 @@
   "version": "0.5.10",
   "description": "语雀浏览器插件",
   "private": true,
-  "releaseNotes": [
-    "[特性] 支持行内代码块",
-    "[优化] 优化图片剪藏逻辑"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/yuque/yuque-chrome-extension.git"
