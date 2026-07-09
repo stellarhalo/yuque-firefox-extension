@@ -5,7 +5,8 @@ on:
 
   push:
     branches:
-      - '**'
+      - 'master'
+      - 'main'
     paths-ignore:
       - '**.md'
 
@@ -16,13 +17,8 @@ concurrency:
 
 jobs:
   Runner:
-    timeout-minutes: 10
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        node-version: [16]
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Git Source
         uses: actions/checkout@v3
@@ -32,17 +28,32 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
 
       - name: Install dependencies
         run: npm install --force
 
       - name: Lint and Types
-        run:
+        run: |
           npm run lint
           npm run type:check
 
-      - name: Bundle
-        run:
-          npm run bundle
+      - name: Build Firefox Release
+        run: npm run bundle:firefox
+
+      - name: Build Firefox Beta
+        run: npm run bundle:firefox:beta
+
+      - name: Package
+        run: npm run pack-zip
+
+      - name: Upload Release Assets
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/yuque-firefox-extension-*.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
