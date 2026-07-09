@@ -28,10 +28,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --force
+        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
       - name: Lint and Types
         run: |
