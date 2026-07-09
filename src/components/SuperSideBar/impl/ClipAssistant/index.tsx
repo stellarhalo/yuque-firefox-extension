@@ -211,7 +211,7 @@ function ClipContent() {
             canvas.height = height;
             context?.drawImage(image, 0, 0, width, height, 0, 0, width, height);
             canvas.toBlob(async blob => {
-              const result = await ocrManager.startOCR('blob', blob || '');
+              const result: IStartOcrResult = await ocrManager.startOCR('blob', blob || '');
               resolve(result);
             });
           };

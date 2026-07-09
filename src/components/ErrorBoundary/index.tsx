@@ -28,15 +28,13 @@ class ErrorBoundary extends React.Component<IErrorBoundaryProps> {
   }
 
   render() {
-    const { error, info } = this.state;
+    const { error } = this.state;
     const { withFallbackUI, fallbackUI, children, errorMessage } = this.props;
     if (error) {
       if (withFallbackUI) {
         const ErrorFallbackComponent = fallbackUI || FallbackUI;
         return (
           <ErrorFallbackComponent
-            error={error}
-            info={info}
             errorMessage={errorMessage}
           />
         );

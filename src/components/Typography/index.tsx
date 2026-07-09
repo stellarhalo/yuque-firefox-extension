@@ -10,20 +10,20 @@ import { Tooltip } from 'antd';
 import useMeasure from '@/hooks/useMeasure';
 import styles from './index.module.less';
 
-function fillRef(ref, node) {
+function fillRef(ref: React.Ref<unknown>, node: HTMLElement | null) {
   if (typeof ref === 'function') {
     ref(node);
-  } else if (Object.prototype.toString.call(ref).slice(8, -1) === 'Object') {
-    ref.current = node;
+  } else if (ref && typeof ref === 'object' && 'current' in ref) {
+    (ref as React.MutableRefObject<unknown>).current = node;
   }
 }
 
-function composeRef(...refs) {
+function composeRef(...refs: React.Ref<unknown>[]) {
   const _refs = refs.filter(ref => ref);
   if (_refs.length === 1) {
     return _refs[0];
   }
-  return node => {
+  return (node: HTMLElement | null) => {
     _refs.forEach(ref => {
       fillRef(ref, node);
     });

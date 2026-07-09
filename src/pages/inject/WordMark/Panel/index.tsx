@@ -15,7 +15,7 @@ interface WordMarkPanelProps {
   selectText: string;
   type: WordMarkOptionTypeEnum;
   closeWordMark: () => void;
-  editorRef: React.MutableRefObject<IEditorRef>;
+  editorRef: React.RefObject<IEditorRef>;
   save: (text: string) => void;
 }
 

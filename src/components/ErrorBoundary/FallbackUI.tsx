@@ -1,7 +1,7 @@
 import React from 'react';
 import { __i18n } from '@/isomorphic/i18n';
 
-const FallbackUI = ({ errorMessage }) => {
+const FallbackUI: React.FC<{ errorMessage?: string }> = ({ errorMessage }) => {
   const imageSrc =
     'https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*2V7cQIBf7DgAAAAAAAAAAAAAARQnAQ';
 

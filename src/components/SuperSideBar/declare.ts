@@ -54,7 +54,7 @@ export interface IRenderDisableOptions extends IBaseRenderOptions {
 }
 
 export interface IRenderScrollerOptions extends IBaseRenderOptions {
-  ref: React.MutableRefObject<IScrollerRef | undefined>;
+  ref: React.MutableRefObject<IScrollerRef | null>;
 }
 
 export interface IRenderProgressOptions extends IBaseRenderOptions {

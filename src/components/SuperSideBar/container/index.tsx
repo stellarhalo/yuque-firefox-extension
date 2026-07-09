@@ -24,7 +24,7 @@ interface ContentProps {
   renderContext: ISidebarRenderContext;
 }
 
-const EnhanceContentImpl = (props: ContentProps) => {
+const EnhanceContentImpl: React.FC<ContentProps> = props => {
   const { scrollerRef, assistant, renderContext } = props;
 
   if (!assistant?.provider) {
@@ -43,7 +43,7 @@ const EnhanceContentImpl = (props: ContentProps) => {
 
   if (customizedContent) {
     // 全接管模式的渲染
-    return customizedContent;
+    return <>{customizedContent}</>;
   }
 
   return (
@@ -66,7 +66,7 @@ function SuperSidebarContainer() {
   const rootDrawerRef = useRef<IRootDrawerRef>(null);
   const { user } = useAccountContext();
   const { forceUpdate } = useForceUpdate();
-  const scrollerRef = useRef<IScrollerRef>();
+  const scrollerRef = useRef<IScrollerRef | null>(null);
 
   const contextData: ISidebarContextData = useMemo(() => {
     return { me: user };

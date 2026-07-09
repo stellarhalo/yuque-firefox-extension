@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import { IRenderScrollerOptions, IScrollerRef } from '../../declare';
 import styles from './index.module.less';
 
-type Props = IRenderScrollerOptions;
+type Props = Omit<IRenderScrollerOptions, 'ref'>;
 
-const ScrollerImpl = (props: Props, ref: any) => {
+const ScrollerImpl = (props: Props, ref: React.Ref<IScrollerRef>) => {
   const { className, children, ...rest } = props;
   const containerRef = useRef<HTMLDivElement>(null);
 

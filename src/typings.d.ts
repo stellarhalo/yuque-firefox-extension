@@ -64,3 +64,16 @@ declare module '*.svg' {
 }
 
 declare function __i18n(text: string, params?: any): string;
+
+declare module 'easy-i18n-cli/src/locale' {
+  interface LocaleOptions {
+    en: Record<string, string>;
+    useEn: () => boolean;
+  }
+  function locale(options: LocaleOptions): (text: string, params?: {[key: string]: string}) => string;
+  export default locale;
+}
+
+declare module 'uuid' {
+  export function v4(): string;
+}

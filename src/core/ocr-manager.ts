@@ -117,7 +117,7 @@ class OCRManager {
     return [];
   }
 
-  async startOCR(type: 'file' | 'blob' | 'url', content: File | Blob | string) {
+  async startOCR(type: 'file' | 'blob' | 'url', content: File | Blob | string): Promise<IStartOcrResult> {
     return await new Promise(resolve => {
       this.ocrQueue.push({ resolve, task: () => this.executeOcr(type, content) });
       this.dequeue();
