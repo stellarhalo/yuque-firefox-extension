@@ -9,7 +9,7 @@ const distFolder = path.resolve(
   'dist',
   process.env.BROWSER === 'firefox'
     ? (process.env.BETA === 'beta' ? `${pkg.version}-firefox-beta` : `${pkg.version}-firefox`)
-    : (process.env.BETA === 'beta' ? `${pkg.version}-beta` : pkg.version),
+    : (process.env.BETA === 'beta' ? `${pkg.version}-beta` : pkg.version)
 );
 const cdnPrefix = 'https://app.nlark.com/yuque-chrome-extension';
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));

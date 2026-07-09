@@ -3,7 +3,7 @@ import chromeExtension from './core/chromeExtension';
 export function listenBrowserActionEvent() {
   // 获取 action API（Firefox 兼容）
   const actionAPI = chromeExtension.action;
-  
+
   if (!actionAPI) {
     console.log('Action API not available');
     return;
@@ -11,7 +11,7 @@ export function listenBrowserActionEvent() {
 
   actionAPI.onClicked.addListener(async tab => {
     const currentTab = await chromeExtension.tabs.getCurrentTab(tab);
-    
+
     if (!currentTab?.id) {
       return;
     }
@@ -31,7 +31,7 @@ export function listenBrowserActionEvent() {
         if (res?.[0]?.result?.error) {
           const msg = __i18n('你需要重新加载该页面才能剪藏。请重新加载页面后再试一次');
           chromeExtension.scripting.executeScript({
-            target: { tabId: currentTab.id },
+            target: { tabId: currentTab.id as number },
             args: [{ msg }],
             func: (args: { msg: string }) => {
               window.alert(args.msg); // eslint-disable-line

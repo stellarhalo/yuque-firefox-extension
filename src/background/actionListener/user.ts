@@ -34,9 +34,9 @@ const waitForWindowLogined = (windowId: number) => {
   return new Promise<void>(resolve => {
     const filter = { urls: ['*://*.yuque.com/*'] };
     chromeExtension.webRequest.onCompleted.addListener(
-      (data) => {
+      data => {
         if (data.tabId && data.tabId > 0) {
-          chromeExtension.tabs.get(data.tabId, (tab) => {
+          chromeExtension.tabs.get(data.tabId, tab => {
             if (chrome.runtime.lastError) {
               return;
             }

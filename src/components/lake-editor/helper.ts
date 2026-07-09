@@ -60,9 +60,9 @@ export const extractSummaryRaw = (
   const OVERFLOW_TIP = "<p>---'首段内容太长，无法截取摘要'---</p>";
 
   // 移除超过段落数量的节点
-  let removeNode = body.childNodes[summaryCount];
+  let removeNode: ChildNode | null = body.childNodes[summaryCount];
   while (removeNode) {
-    const nextNode = removeNode.nextSibling;
+    const nextNode: ChildNode | null = removeNode.nextSibling;
     removeNode.remove();
     removeNode = nextNode;
   }
@@ -134,8 +134,10 @@ export const extractSummaryRaw = (
 
               const pNode = summaryDocument.createElement('p');
 
-              node.parentNode.replaceChild(pNode, node);
-              pNode.appendChild(node);
+              if (node.parentNode) {
+                node.parentNode.replaceChild(pNode, node);
+                pNode.appendChild(node);
+              }
 
               hasImage = true;
             }

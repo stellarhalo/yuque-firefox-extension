@@ -136,7 +136,8 @@ export default class HttpClient {
     return `?${new URLSearchParams(params).toString()}`;
   }
 
-  private async handlePrepareRequestParams(url: string, _config: IRequestConfig, _option?: IRequestOptions) {    const headers = await this.prepareHeaders();
+  private async handlePrepareRequestParams(url: string, _config: IRequestConfig, _option?: IRequestOptions) {
+    const headers = await this.prepareHeaders();
     const config: RequestInit = {
       ..._config,
       headers: {

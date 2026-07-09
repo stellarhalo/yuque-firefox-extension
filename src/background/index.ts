@@ -29,12 +29,12 @@ chromeExtension.runtime.onInstalled.addListener(async details => {
   console.log('-- runtime installed');
 
   createContextMenu();
-  
+
   // 仅在支持 declarativeNetRequest 的浏览器上更新规则
   if (chromeExtension.declarativeNetRequest) {
     updateDynamicRules();
   }
-  
+
   updateYuqueCookieRule();
 
   if (details.reason === 'install') {
@@ -111,7 +111,7 @@ function updateDynamicRules() {
     console.log('declarativeNetRequest not supported, skipping dynamic rules');
     return;
   }
-  
+
   chromeExtension.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [1],
     addRules: [
@@ -150,12 +150,12 @@ const updateYuqueCookieRule = async () => {
   const cookieArray = normalCookie.concat(partitionCookie || []).map(item => {
     return `${item.name}=${item.value}`;
   });
-  
+
   if (!chromeExtension.declarativeNetRequest) {
     console.log('declarativeNetRequest not supported, skipping cookie rules');
     return;
   }
-  
+
   chromeExtension.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [2],
     addRules: [

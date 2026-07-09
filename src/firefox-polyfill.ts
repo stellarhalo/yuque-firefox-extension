@@ -4,7 +4,7 @@
  */
 
 // Firefox 的 browser API 命名空间
-const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+const browserAPI: typeof chrome = typeof browser !== 'undefined' ? (browser as unknown as typeof chrome) : chrome;
 
 // 导出统一的 API
 export const extensionAPI = {
@@ -13,7 +13,7 @@ export const extensionAPI = {
   storage: browserAPI.storage,
   cookies: browserAPI.cookies,
   contextMenus: browserAPI.contextMenus,
-  action: browserAPI.action || browserAPI.browserAction,
+  action: browserAPI.action || (browserAPI as any).browserAction,
   scripting: browserAPI.scripting,
   commands: browserAPI.commands,
   webRequest: browserAPI.webRequest,

@@ -10,7 +10,7 @@ export async function createSidePanelActionListener(
 ) {
   const { type } = request.data;
   const currentTab = await chromeExtension.tabs.getCurrentTab(sender.tab);
-  
+
   if (!currentTab?.id) {
     callback({ error: 'No active tab' });
     return;

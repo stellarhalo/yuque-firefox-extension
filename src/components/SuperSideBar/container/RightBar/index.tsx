@@ -37,7 +37,7 @@ export const BarItem = ({ assistant }: IItemProps) => {
 };
 
 export const MenuItem = ({ assistant }: IItemProps) => {
-  const { label, icon, id } = assistant;
+  const { label: _label, icon, id } = assistant;
   const { currentAssistant } = superSidebar;
   const isSelected = id === currentAssistant?.id;
 

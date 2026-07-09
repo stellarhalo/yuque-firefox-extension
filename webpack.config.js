@@ -68,12 +68,12 @@ const plugins = [
             version: pkg.version,
             name: pkg.description,
           }, origin);
-          
+
           if (isBeta) {
             value.name = `${value.name} Beta`;
             value.description = `${value.description}`;
           }
-          
+
           // Firefox 特定配置
           if (isFirefox) {
             // 移除 Firefox 不支持的权限
@@ -83,28 +83,28 @@ const plugins = [
               );
               value.permissions.push('webRequestBlocking');
             }
-            
+
             // 移除 Firefox 不支持的 optional_permissions
             if (value.optional_permissions) {
               value.optional_permissions = value.optional_permissions.filter(
                 p => !['declarativeNetRequest', 'declarativeNetRequestWithHostAccess', 'sidePanel'].includes(p)
               );
             }
-            
+
             // 确保 optional_permissions 存在
             if (!value.optional_permissions) {
               value.optional_permissions = [];
             }
-            
+
             // 移除 side_panel 配置
             delete value.side_panel;
-            
+
             // Firefox MV3 使用 ES modules
             if (value.background) {
               delete value.background.service_worker;
               value.background.type = 'module';
             }
-            
+
             // Firefox MV3 使用 extension_pages 格式
             // Firefox MV3 不允许 'unsafe-eval'，只允许 'self' 和 'wasm-unsafe-eval'
             if (value.content_security_policy) {
@@ -115,37 +115,37 @@ const plugins = [
                 const firefoxScriptSrc = scriptSrc.replace(/'unsafe-eval'/g, '').trim() || "'self'";
                 const objectSrc = csp['object-src'] || "'self'";
                 value.content_security_policy = {
-                  extension_pages: `script-src ${firefoxScriptSrc}; object-src ${objectSrc}`
+                  extension_pages: `script-src ${firefoxScriptSrc}; object-src ${objectSrc}`,
                 };
               }
             }
-            
+
             // 确保 browser_specific_settings 存在
             if (!value.browser_specific_settings) {
               value.browser_specific_settings = {
                 gecko: {
                   id: 'yuque-extension@yuque.com',
-                  strict_min_version: '109.0'
-                }
+                  strict_min_version: '109.0',
+                },
               };
             }
           }
-          
+
           return Buffer.from(JSON.stringify(value, null, 2));
         },
       },
       {
         from: path.join(srcPath, 'background/background-wrapper.js'),
-        to: path.join(distPath, 
-          isFirefox 
+        to: path.join(distPath,
+          isFirefox
             ? (isBeta ? `${pkg.version}-firefox-beta` : `${pkg.version}-firefox`)
-            : (isBeta ? `${pkg.version}-beta` : pkg.version), 
+            : (isBeta ? `${pkg.version}-beta` : pkg.version),
           'background-wrapper.js'
         ),
         transform(content) {
           if (isFirefox) {
             // Firefox MV3 使用 ES modules，不支持 importScripts
-            return Buffer.from(`import './background.js';`);
+            return Buffer.from('import \'./background.js\';');
           }
           return content;
         },
@@ -279,8 +279,8 @@ const options = {
   stats: 'errors-only',
   entry,
   output: {
-    path: path.join(__dirname, 'dist', 
-      isFirefox 
+    path: path.join(__dirname, 'dist',
+      isFirefox
         ? (isBeta ? `${pkg.version}-firefox-beta` : `${pkg.version}-firefox`)
         : (isBeta ? `${pkg.version}-beta` : pkg.version)
     ),
